@@ -26,3 +26,15 @@
             <foreach collection="subCmpnyInfpList" item="item" open="(" separator="," close=")">
                 CONCAT(#{item.sc}, #{item.cmpnyCd})
             </foreach>
+
+
+                WITH temp_codes AS (
+                    SELECT UNNEST(#{codeArray}::text[]) as code
+                )
+                select distinct oya_Svc_cent_cd
+                from t058_hojn_clnt_togo_stt t
+                where t.lgcl_dlt_flg = '0'
+                and exists (
+                    select 1 from temp_codes tc
+                    where t.oya_svc_cent_Cd = tc.code
+                )
