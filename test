@@ -1,0 +1,28 @@
+    select oya_Svc_cent_cd
+    from t058_hojn_clnt_togo_stt
+    where lgcl_dlt_flg = '0'
+    and oya_svc_cent_Cd = ANY(
+        array(
+            <foreach collection="subCmpnyInfpList" item="item" separator=",">
+                CONCAT(#{item.sc}, #{item.cmpnyCd})
+            </foreach>
+        )
+    )
+
+
+        select oya_Svc_cent_cd
+        from t058_hojn_clnt_togo_stt
+        where lgcl_dlt_flg = '0'
+        and oya_svc_cent_Cd in
+        <foreach collection="subCmpnyInfpList" item="item" open="(" separator="," close=")">
+            #{item.combinedCode}
+        </foreach>
+
+
+            select oya_Svc_cent_cd
+            from t058_hojn_clnt_togo_stt
+            where lgcl_dlt_flg = '0'
+            and oya_svc_cent_Cd in
+            <foreach collection="subCmpnyInfpList" item="item" open="(" separator="," close=")">
+                CONCAT(#{item.sc}, #{item.cmpnyCd})
+            </foreach>
