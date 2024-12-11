@@ -1,3 +1,15 @@
+SELECT oya_Svc_cent_cd
+FROM t058_hojn_clnt_togo_stt
+WHERE lgcl_dlt_flg = '0'
+  AND oya_svc_cent_Cd = ANY(
+    ARRAY[
+      <foreach collection="subCmpnyInfpList" item="item" separator=",">
+        #{item.sc} || #{item.cmpnyCd}
+      </foreach>
+    ]
+  )
+
+
     select oya_Svc_cent_cd
     from t058_hojn_clnt_togo_stt
     where lgcl_dlt_flg = '0'
